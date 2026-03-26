@@ -16,7 +16,10 @@ const About = () => {
       <Pressable
         accessibilityRole="button"
         onPress={() => router.push("/")}
-        style={({ pressed }) => [styles.button, pressed && styles.buttonPressed]}
+        style={({ pressed }) => [
+          styles.button,
+          pressed && styles.buttonPressed,
+        ]}
       >
         <Text style={styles.buttonText}>Back to tasks</Text>
       </Pressable>
