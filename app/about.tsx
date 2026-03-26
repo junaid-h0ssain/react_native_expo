@@ -1,6 +1,6 @@
-import { Link } from "expo-router";
+import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
 const About = () => {
   return (
@@ -13,9 +13,13 @@ const About = () => {
         matters today.
       </Text>
 
-      <Link href="/" style={styles.link}>
-        Back to tasks
-      </Link>
+      <Pressable
+        accessibilityRole="button"
+        onPress={() => router.push("/")}
+        style={({ pressed }) => [styles.button, pressed && styles.buttonPressed]}
+      >
+        <Text style={styles.buttonText}>Back to tasks</Text>
+      </Pressable>
     </View>
   );
 };
@@ -47,13 +51,19 @@ const styles = StyleSheet.create({
     color: "#6f5d49",
     maxWidth: 340,
   },
-  link: {
+  button: {
     marginTop: 10,
     alignSelf: "flex-start",
     paddingVertical: 12,
     paddingHorizontal: 16,
     borderRadius: 999,
     backgroundColor: "#2f241b",
+  },
+  buttonPressed: {
+    opacity: 0.84,
+    transform: [{ scale: 0.98 }],
+  },
+  buttonText: {
     color: "#fbf5eb",
     fontSize: 15,
     fontWeight: "700",
