@@ -4,8 +4,10 @@ import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
 import {
+  Alert,
   FlatList,
   Pressable,
+  Share,
   StyleSheet,
   Text,
   TextInput,
@@ -28,6 +30,7 @@ type Filter = "all" | "active" | "done";
 
 const initialTodos: Todo[] = [];
 const TODOS_STORAGE_KEY = "@expo-todo/todos";
+const STORAGE_PREVIEW_MAX_LENGTH = 320;
 
 const readStoredTodos = async () => {
   try {
@@ -42,6 +45,20 @@ const writeStoredTodos = async (todos: Todo[]) => {
     await AsyncStorage.setItem(TODOS_STORAGE_KEY, JSON.stringify(todos));
   } catch {
     // Keep UI responsive even if storage isn't available in the current runtime.
+  }
+};
+
+const shareStoredTodos = async (payload: string) => {
+  try {
+    await Share.share({
+      title: "Todo storage export",
+      message: payload,
+    });
+  } catch {
+    Alert.alert(
+      "Share unavailable",
+      "Could not open the share sheet on this device.",
+    );
   }
 };
 
@@ -191,6 +208,40 @@ export default function Index() {
     setTodos((currentTodos) => currentTodos.filter((todo) => todo.id !== id));
   };
 
+  const exportDebugData = () => {
+    void (async () => {
+      const storedTodos = await readStoredTodos();
+
+      if (!storedTodos) {
+        Alert.alert("No stored data", "Add a task first, then export data.");
+        return;
+      }
+
+      let payload = storedTodos;
+
+      try {
+        payload = JSON.stringify(JSON.parse(storedTodos), null, 2);
+      } catch {
+        // Keep raw payload if parsing fails so it can still be exported for debugging.
+      }
+
+      const preview =
+        payload.length > STORAGE_PREVIEW_MAX_LENGTH
+          ? `${payload.slice(0, STORAGE_PREVIEW_MAX_LENGTH)}...`
+          : payload;
+
+      Alert.alert("Stored todos", preview, [
+        { text: "Close", style: "cancel" },
+        {
+          text: "Share JSON",
+          onPress: () => {
+            void shareStoredTodos(payload);
+          },
+        },
+      ]);
+    })();
+  };
+
   return (
     <View style={styles.screen}>
       <StatusBar style="dark" />
@@ -285,6 +336,17 @@ export default function Index() {
         <View style={styles.listCard}>
           <View style={styles.listHeader}>
             <Text style={styles.sectionTitle}>Tasks</Text>
+            <Pressable
+              accessibilityRole="button"
+              accessibilityLabel="Export or debug stored todo data"
+              onPress={exportDebugData}
+              style={({ pressed }) => [
+                styles.debugButton,
+                pressed && styles.debugButtonPressed,
+              ]}
+            >
+              <Text style={styles.debugButtonText}>Export/Debug</Text>
+            </Pressable>
           </View>
 
           <FlatList
@@ -529,12 +591,30 @@ const styles = StyleSheet.create({
   listHeader: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "space-between",
     marginBottom: 10,
   },
   sectionTitle: {
     fontSize: 18,
     fontWeight: "800",
     color: "#2f241b",
+  },
+  debugButton: {
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 999,
+    backgroundColor: "rgba(143, 91, 70, 0.14)",
+    borderWidth: 1,
+    borderColor: "rgba(143, 91, 70, 0.2)",
+  },
+  debugButtonPressed: {
+    opacity: 0.8,
+  },
+  debugButtonText: {
+    fontSize: 12,
+    fontWeight: "700",
+    color: "#8f5b46",
+    letterSpacing: 0.2,
   },
   todoList: {
     gap: 12,
