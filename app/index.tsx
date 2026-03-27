@@ -1,7 +1,8 @@
 import { Ionicons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   FlatList,
   Pressable,
@@ -13,17 +14,37 @@ import {
 
 type Todo = {
   id: string;
-  title: string;
-  completed: boolean;
+  task: string;
+  createdAt: string;
+  status: "active" | "done";
+};
+
+type StoredTodo = Partial<Todo> & {
+  title?: unknown;
+  completed?: unknown;
 };
 
 type Filter = "all" | "active" | "done";
 
-const initialTodos: Todo[] = [
-  { id: "1", title: "Plan the day", completed: true },
-  { id: "2", title: "Finish the important task", completed: false },
-  { id: "3", title: "Take a short walk", completed: false },
-];
+const initialTodos: Todo[] = [];
+const TODOS_STORAGE_KEY = "@expo-todo/todos";
+
+const createTodoId = () =>
+  `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+
+const formatCreatedAt = (value: string) => {
+  const parsedDate = new Date(value);
+
+  if (Number.isNaN(parsedDate.getTime())) {
+    return "Unknown date";
+  }
+
+  return parsedDate.toLocaleDateString(undefined, {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+};
 
 const filterOptions: { key: Filter; label: string }[] = [
   { key: "all", label: "All" },
@@ -35,21 +56,88 @@ export default function Index() {
   const [todos, setTodos] = useState<Todo[]>(initialTodos);
   const [draftTitle, setDraftTitle] = useState("");
   const [filter, setFilter] = useState<Filter>("all");
+  const [hasLoadedTodos, setHasLoadedTodos] = useState(false);
 
-  const remainingCount = todos.filter((todo) => !todo.completed).length;
+  useEffect(() => {
+    void (async () => {
+      try {
+        const storedTodos = await AsyncStorage.getItem(TODOS_STORAGE_KEY);
+
+        if (!storedTodos) {
+          return;
+        }
+
+        const parsedTodos = JSON.parse(storedTodos) as unknown;
+
+        if (!Array.isArray(parsedTodos)) {
+          return;
+        }
+
+        const normalizedTodos = parsedTodos
+          .map((item) => {
+            if (!item || typeof item !== "object") {
+              return null;
+            }
+
+            const todo = item as StoredTodo;
+            const normalizedTask =
+              typeof todo.task === "string"
+                ? todo.task.trim()
+                : typeof todo.title === "string"
+                  ? todo.title.trim()
+                  : "";
+
+            if (!normalizedTask) {
+              return null;
+            }
+
+            const normalizedStatus =
+              todo.status === "done" || todo.completed === true
+                ? "done"
+                : "active";
+
+            return {
+              id:
+                typeof todo.id === "string" && todo.id
+                  ? todo.id
+                  : createTodoId(),
+              task: normalizedTask,
+              createdAt:
+                typeof todo.createdAt === "string" && todo.createdAt
+                  ? todo.createdAt
+                  : new Date().toISOString(),
+              status: normalizedStatus,
+            } satisfies Todo;
+          })
+          .filter((todo): todo is Todo => todo !== null);
+
+        setTodos(normalizedTodos);
+      } catch {
+        setTodos(initialTodos);
+      } finally {
+        setHasLoadedTodos(true);
+      }
+    })();
+  }, []);
+
+  useEffect(() => {
+    if (!hasLoadedTodos) {
+      return;
+    }
+
+    void AsyncStorage.setItem(TODOS_STORAGE_KEY, JSON.stringify(todos));
+  }, [hasLoadedTodos, todos]);
+
+  const remainingCount = todos.filter((todo) => todo.status !== "done").length;
   const completedCount = todos.length - remainingCount;
 
-  const visibleTodos = useMemo(() => {
-    if (filter === "active") {
-      return todos.filter((todo) => !todo.completed);
-    }
+  let visibleTodos = todos;
 
-    if (filter === "done") {
-      return todos.filter((todo) => todo.completed);
-    }
-
-    return todos;
-  }, [filter, todos]);
+  if (filter === "active") {
+    visibleTodos = todos.filter((todo) => todo.status !== "done");
+  } else if (filter === "done") {
+    visibleTodos = todos.filter((todo) => todo.status === "done");
+  }
 
   const addTodo = () => {
     const trimmedTitle = draftTitle.trim();
@@ -60,9 +148,10 @@ export default function Index() {
 
     setTodos((currentTodos) => [
       {
-        id: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
-        title: trimmedTitle,
-        completed: false,
+        id: createTodoId(),
+        task: trimmedTitle,
+        createdAt: new Date().toISOString(),
+        status: "active",
       },
       ...currentTodos,
     ]);
@@ -72,17 +161,18 @@ export default function Index() {
   const toggleTodo = (id: string) => {
     setTodos((currentTodos) =>
       currentTodos.map((todo) =>
-        todo.id === id ? { ...todo, completed: !todo.completed } : todo,
+        todo.id === id
+          ? {
+              ...todo,
+              status: todo.status === "done" ? "active" : "done",
+            }
+          : todo,
       ),
     );
   };
 
   const deleteTodo = (id: string) => {
     setTodos((currentTodos) => currentTodos.filter((todo) => todo.id !== id));
-  };
-
-  const clearCompleted = () => {
-    setTodos((currentTodos) => currentTodos.filter((todo) => !todo.completed));
   };
 
   return (
@@ -96,8 +186,7 @@ export default function Index() {
           <Text style={styles.kicker}>Daily focus</Text>
           <Text style={styles.title}>Todo list</Text>
           <Text style={styles.subtitle}>
-            Keep the day light. Add a task, check it off, and clear the rest
-            when you are done.
+            Keep the day light. Add a task, check it off, and keep momentum.
           </Text>
           <Pressable
             accessibilityRole="button"
@@ -180,16 +269,6 @@ export default function Index() {
         <View style={styles.listCard}>
           <View style={styles.listHeader}>
             <Text style={styles.sectionTitle}>Tasks</Text>
-            <Pressable onPress={clearCompleted} disabled={completedCount === 0}>
-              <Text
-                style={[
-                  styles.clearButton,
-                  completedCount === 0 && styles.clearButtonDisabled,
-                ]}
-              >
-                Clear done
-              </Text>
-            </Pressable>
           </View>
 
           <FlatList
@@ -217,18 +296,18 @@ export default function Index() {
                 <Pressable
                   accessibilityRole="button"
                   accessibilityLabel={
-                    item.completed
-                      ? `Mark ${item.title} as active`
-                      : `Mark ${item.title} as done`
+                    item.status === "done"
+                      ? `Mark ${item.task} as active`
+                      : `Mark ${item.task} as done`
                   }
                   onPress={() => toggleTodo(item.id)}
                   style={({ pressed }) => [
                     styles.todoToggle,
-                    item.completed && styles.todoToggleCompleted,
+                    item.status === "done" && styles.todoToggleCompleted,
                     pressed && styles.pressedToggle,
                   ]}
                 >
-                  {item.completed ? (
+                  {item.status === "done" ? (
                     <Ionicons name="checkmark" size={14} color="#fbf5eb" />
                   ) : null}
                 </Pressable>
@@ -237,19 +316,20 @@ export default function Index() {
                   <Text
                     style={[
                       styles.todoTitle,
-                      item.completed && styles.todoTitleCompleted,
+                      item.status === "done" && styles.todoTitleCompleted,
                     ]}
                   >
-                    {item.title}
+                    {item.task}
                   </Text>
                   <Text style={styles.todoMeta}>
-                    {item.completed ? "Completed" : "In progress"}
+                    {item.status === "done" ? "Completed" : "In progress"} -
+                    Added {formatCreatedAt(item.createdAt)}
                   </Text>
                 </View>
 
                 <Pressable
                   accessibilityRole="button"
-                  accessibilityLabel={`Delete ${item.title}`}
+                  accessibilityLabel={`Delete ${item.task}`}
                   onPress={() => deleteTodo(item.id)}
                   style={({ pressed }) => [
                     styles.deleteButton,
@@ -433,21 +513,12 @@ const styles = StyleSheet.create({
   listHeader: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
     marginBottom: 10,
   },
   sectionTitle: {
     fontSize: 18,
     fontWeight: "800",
     color: "#2f241b",
-  },
-  clearButton: {
-    fontSize: 13,
-    fontWeight: "700",
-    color: "#8f5b46",
-  },
-  clearButtonDisabled: {
-    color: "#b7aa99",
   },
   todoList: {
     gap: 12,
