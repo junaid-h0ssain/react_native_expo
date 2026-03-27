@@ -67,6 +67,21 @@ const filterOptions: { key: Filter; label: string }[] = [
   { key: "done", label: "Done" },
 ];
 
+const palette = {
+  background: "#000000",
+  surface: "#050505",
+  surfaceAlt: "#0b0b0b",
+  textPrimary: "#00ffff",
+  textSecondary: "#66ffff",
+  textMuted: "#3ccfcf",
+  border: "#ffd400",
+  borderSoft: "rgba(255, 212, 0, 0.45)",
+  backdropOne: "rgba(0, 255, 255, 0.08)",
+  backdropTwo: "rgba(255, 212, 0, 0.08)",
+  accent: "#00ffff",
+  accentText: "#000000",
+};
+
 export default function Index() {
   const [todos, setTodos] = useState<Todo[]>(initialTodos);
   const [draftTitle, setDraftTitle] = useState("");
@@ -192,7 +207,7 @@ export default function Index() {
 
   return (
     <View style={styles.screen}>
-      <StatusBar style="dark" />
+      <StatusBar style="light" />
       <View style={styles.backdropOne} />
       <View style={styles.backdropTwo} />
 
@@ -223,7 +238,7 @@ export default function Index() {
         <View style={styles.inputCard}>
           <TextInput
             placeholder="Add a new task"
-            placeholderTextColor="#8d806f"
+            placeholderTextColor={palette.textMuted}
             style={styles.input}
             value={draftTitle}
             onChangeText={setDraftTitle}
@@ -239,7 +254,7 @@ export default function Index() {
               pressed && styles.pressedButton,
             ]}
           >
-            <Ionicons name="add" size={22} color="#fbf5eb" />
+            <Ionicons name="add" size={22} color={palette.accentText} />
           </Pressable>
         </View>
 
@@ -287,7 +302,7 @@ export default function Index() {
             ListEmptyComponent={
               <View style={styles.emptyState}>
                 <View style={styles.emptyIcon}>
-                  <Ionicons name="leaf" size={24} color="#8d806f" />
+                  <Ionicons name="leaf" size={24} color={palette.textPrimary} />
                 </View>
                 <Text style={styles.emptyTitle}>Nothing here yet</Text>
                 <Text style={styles.emptyText}>
@@ -313,7 +328,11 @@ export default function Index() {
                   ]}
                 >
                   {item.status === "done" ? (
-                    <Ionicons name="checkmark" size={14} color="#fbf5eb" />
+                    <Ionicons
+                      name="checkmark"
+                      size={14}
+                      color={palette.accentText}
+                    />
                   ) : null}
                 </Pressable>
 
@@ -341,7 +360,11 @@ export default function Index() {
                     pressed && styles.pressedDelete,
                   ]}
                 >
-                  <Ionicons name="trash-outline" size={18} color="#8f5b46" />
+                  <Ionicons
+                    name="trash-outline"
+                    size={18}
+                    color={palette.textPrimary}
+                  />
                 </Pressable>
               </View>
             )}
@@ -355,7 +378,7 @@ export default function Index() {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: "#f3eadb",
+    backgroundColor: palette.background,
   },
   backdropOne: {
     position: "absolute",
@@ -364,7 +387,7 @@ const styles = StyleSheet.create({
     width: 220,
     height: 220,
     borderRadius: 110,
-    backgroundColor: "rgba(144, 114, 81, 0.14)",
+    backgroundColor: palette.backdropOne,
   },
   backdropTwo: {
     position: "absolute",
@@ -373,7 +396,7 @@ const styles = StyleSheet.create({
     width: 180,
     height: 180,
     borderRadius: 90,
-    backgroundColor: "rgba(143, 91, 70, 0.14)",
+    backgroundColor: palette.backdropTwo,
   },
   container: {
     flex: 1,
@@ -390,18 +413,18 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     letterSpacing: 1.4,
     textTransform: "uppercase",
-    color: "#8f5b46",
+    color: palette.textSecondary,
   },
   title: {
     fontSize: 38,
     lineHeight: 42,
     fontWeight: "800",
-    color: "#2f241b",
+    color: palette.textPrimary,
   },
   subtitle: {
     fontSize: 16,
     lineHeight: 22,
-    color: "#6f5d49",
+    color: palette.textSecondary,
     maxWidth: 340,
   },
   statsRow: {
@@ -413,19 +436,19 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     paddingHorizontal: 12,
     borderRadius: 20,
-    backgroundColor: "rgba(251, 245, 235, 0.92)",
+    backgroundColor: palette.surface,
     borderWidth: 1,
-    borderColor: "rgba(143, 91, 70, 0.12)",
+    borderColor: palette.border,
   },
   statValue: {
     fontSize: 24,
     fontWeight: "800",
-    color: "#2f241b",
+    color: palette.textPrimary,
   },
   statLabel: {
     marginTop: 4,
     fontSize: 13,
-    color: "#7d6b58",
+    color: palette.textSecondary,
   },
   inputCard: {
     flexDirection: "row",
@@ -433,10 +456,10 @@ const styles = StyleSheet.create({
     gap: 12,
     padding: 12,
     borderRadius: 24,
-    backgroundColor: "#f8f2e6",
+    backgroundColor: palette.surface,
     borderWidth: 1,
-    borderColor: "rgba(143, 91, 70, 0.14)",
-    shadowColor: "#7a5e46",
+    borderColor: palette.border,
+    shadowColor: palette.textPrimary,
     shadowOpacity: 0.07,
     shadowRadius: 20,
     shadowOffset: {
@@ -448,16 +471,18 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     fontSize: 16,
-    color: "#2f241b",
+    color: palette.textPrimary,
     paddingVertical: 8,
   },
   addButton: {
     width: 48,
     height: 48,
     borderRadius: 24,
-    backgroundColor: "#8f5b46",
+    backgroundColor: palette.accent,
     alignItems: "center",
     justifyContent: "center",
+    borderWidth: 1,
+    borderColor: palette.border,
   },
   pressedButton: {
     opacity: 0.8,
@@ -471,21 +496,21 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 14,
     borderRadius: 999,
-    backgroundColor: "rgba(251, 245, 235, 0.8)",
+    backgroundColor: palette.surface,
     borderWidth: 1,
-    borderColor: "rgba(143, 91, 70, 0.12)",
+    borderColor: palette.border,
   },
   filterChipSelected: {
-    backgroundColor: "#2f241b",
-    borderColor: "#2f241b",
+    backgroundColor: palette.surfaceAlt,
+    borderColor: palette.border,
   },
   filterText: {
     fontSize: 14,
     fontWeight: "700",
-    color: "#6f5d49",
+    color: palette.textPrimary,
   },
   filterTextSelected: {
-    color: "#fbf5eb",
+    color: palette.textPrimary,
   },
   pressedChip: {
     opacity: 0.85,
@@ -494,9 +519,9 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 16,
     borderRadius: 28,
-    backgroundColor: "rgba(251, 245, 235, 0.95)",
+    backgroundColor: palette.surface,
     borderWidth: 1,
-    borderColor: "rgba(143, 91, 70, 0.12)",
+    borderColor: palette.border,
   },
   listHeader: {
     flexDirection: "row",
@@ -506,7 +531,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 18,
     fontWeight: "800",
-    color: "#2f241b",
+    color: palette.textPrimary,
   },
   todoList: {
     gap: 12,
@@ -525,7 +550,7 @@ const styles = StyleSheet.create({
     width: 54,
     height: 54,
     borderRadius: 27,
-    backgroundColor: "rgba(143, 91, 70, 0.08)",
+    backgroundColor: palette.surfaceAlt,
     alignItems: "center",
     justifyContent: "center",
     marginBottom: 12,
@@ -533,14 +558,14 @@ const styles = StyleSheet.create({
   emptyTitle: {
     fontSize: 18,
     fontWeight: "800",
-    color: "#2f241b",
+    color: palette.textPrimary,
     marginBottom: 6,
   },
   emptyText: {
     fontSize: 15,
     lineHeight: 21,
     textAlign: "center",
-    color: "#6f5d49",
+    color: palette.textSecondary,
   },
   todoRow: {
     flexDirection: "row",
@@ -548,23 +573,23 @@ const styles = StyleSheet.create({
     gap: 12,
     padding: 14,
     borderRadius: 20,
-    backgroundColor: "#f8f2e6",
+    backgroundColor: palette.surface,
     borderWidth: 1,
-    borderColor: "rgba(143, 91, 70, 0.1)",
+    borderColor: palette.border,
   },
   todoToggle: {
     width: 28,
     height: 28,
     borderRadius: 14,
     borderWidth: 2,
-    borderColor: "#b7aa99",
+    borderColor: palette.border,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#fbf5eb",
+    backgroundColor: palette.surfaceAlt,
   },
   todoToggleCompleted: {
-    borderColor: "#8f5b46",
-    backgroundColor: "#8f5b46",
+    borderColor: palette.border,
+    backgroundColor: palette.accent,
   },
   pressedToggle: {
     opacity: 0.85,
@@ -576,15 +601,15 @@ const styles = StyleSheet.create({
   todoTitle: {
     fontSize: 16,
     fontWeight: "700",
-    color: "#2f241b",
+    color: palette.textPrimary,
   },
   todoTitleCompleted: {
-    color: "#9a8d7b",
+    color: palette.textMuted,
     textDecorationLine: "line-through",
   },
   todoMeta: {
     fontSize: 13,
-    color: "#7d6b58",
+    color: palette.textSecondary,
   },
   deleteButton: {
     width: 34,
@@ -592,7 +617,9 @@ const styles = StyleSheet.create({
     borderRadius: 17,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "rgba(143, 91, 70, 0.08)",
+    backgroundColor: palette.surfaceAlt,
+    borderWidth: 1,
+    borderColor: palette.borderSoft,
   },
   pressedDelete: {
     opacity: 0.8,
