@@ -14,7 +14,8 @@ Add your screenshots to:
 
 Then render them in this README:
 
-![Home screen](./docs/screenshots/Screenshot_20260328_012847.png)
+<img src="./docs/screenshots/Screenshot_20260328_012847.png" alt="Home screen" width="220" />
+<p><em>Version 1</em></p>
 
 ## Get started
 
