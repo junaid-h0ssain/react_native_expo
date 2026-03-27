@@ -29,6 +29,22 @@ type Filter = "all" | "active" | "done";
 const initialTodos: Todo[] = [];
 const TODOS_STORAGE_KEY = "@expo-todo/todos";
 
+const readStoredTodos = async () => {
+  try {
+    return await AsyncStorage.getItem(TODOS_STORAGE_KEY);
+  } catch {
+    return null;
+  }
+};
+
+const writeStoredTodos = async (todos: Todo[]) => {
+  try {
+    await AsyncStorage.setItem(TODOS_STORAGE_KEY, JSON.stringify(todos));
+  } catch {
+    // Keep UI responsive even if storage isn't available in the current runtime.
+  }
+};
+
 const createTodoId = () =>
   `${Date.now()}-${Math.random().toString(16).slice(2)}`;
 
@@ -61,7 +77,7 @@ export default function Index() {
   useEffect(() => {
     void (async () => {
       try {
-        const storedTodos = await AsyncStorage.getItem(TODOS_STORAGE_KEY);
+        const storedTodos = await readStoredTodos();
 
         if (!storedTodos) {
           return;
@@ -125,7 +141,7 @@ export default function Index() {
       return;
     }
 
-    void AsyncStorage.setItem(TODOS_STORAGE_KEY, JSON.stringify(todos));
+    void writeStoredTodos(todos);
   }, [hasLoadedTodos, todos]);
 
   const remainingCount = todos.filter((todo) => todo.status !== "done").length;
