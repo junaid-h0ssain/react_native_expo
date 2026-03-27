@@ -2,6 +2,20 @@
 
 This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
+## Demo images
+
+Store README screenshots in `docs/screenshots/` so they stay separate from runtime app assets.
+
+Add your screenshots to:
+
+- `docs/screenshots/home.png`
+- `docs/screenshots/create-task.png`
+- `docs/screenshots/task-list.png`
+
+Then render them in this README:
+
+![Home screen](./docs/screenshots/Screenshot_20260328_012847.png)
+
 ## Get started
 
 1. Install dependencies
