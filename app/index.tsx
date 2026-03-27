@@ -76,8 +76,6 @@ const palette = {
   textMuted: "#4a9ea0",
   border: "#ffd400",
   borderSoft: "rgba(255, 212, 0, 0.45)",
-  backdropOne: "rgba(141, 239, 240, 0.08)",
-  backdropTwo: "rgba(255, 212, 0, 0.08)",
   accent: "#6edfe0",
   accentText: "#000000",
 };
@@ -208,8 +206,6 @@ export default function Index() {
   return (
     <View style={styles.screen}>
       <StatusBar style="light" />
-      <View style={styles.backdropOne} />
-      <View style={styles.backdropTwo} />
 
       <View style={styles.container}>
         <View style={styles.hero}>
@@ -379,24 +375,6 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     backgroundColor: palette.background,
-  },
-  backdropOne: {
-    position: "absolute",
-    top: -110,
-    right: -90,
-    width: 220,
-    height: 220,
-    borderRadius: 110,
-    backgroundColor: palette.backdropOne,
-  },
-  backdropTwo: {
-    position: "absolute",
-    left: -100,
-    top: 180,
-    width: 180,
-    height: 180,
-    borderRadius: 90,
-    backgroundColor: palette.backdropTwo,
   },
   container: {
     flex: 1,
