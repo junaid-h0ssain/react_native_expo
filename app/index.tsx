@@ -1,6 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
 import {
@@ -204,16 +203,6 @@ export default function Index() {
           <Text style={styles.subtitle}>
             Keep the day light. Add a task, check it off, and keep momentum.
           </Text>
-          <Pressable
-            accessibilityRole="button"
-            onPress={() => router.push("/about")}
-            style={({ pressed }) => [
-              styles.heroButton,
-              pressed && styles.heroButtonPressed,
-            ]}
-          >
-            <Text style={styles.heroButtonText}>About this app</Text>
-          </Pressable>
         </View>
 
         <View style={styles.statsRow}>
@@ -414,23 +403,6 @@ const styles = StyleSheet.create({
     lineHeight: 22,
     color: "#6f5d49",
     maxWidth: 340,
-  },
-  heroButton: {
-    marginTop: 6,
-    alignSelf: "flex-start",
-    paddingVertical: 12,
-    paddingHorizontal: 16,
-    borderRadius: 999,
-    backgroundColor: "#2f241b",
-  },
-  heroButtonPressed: {
-    opacity: 0.84,
-    transform: [{ scale: 0.98 }],
-  },
-  heroButtonText: {
-    color: "#fbf5eb",
-    fontSize: 15,
-    fontWeight: "700",
   },
   statsRow: {
     flexDirection: "row",
