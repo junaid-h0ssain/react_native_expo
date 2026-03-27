@@ -1,23 +1,40 @@
-# Welcome to your Expo app 👋
+# Expo Todo App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A simple and polished todo app built with Expo and React Native.
+
+The app helps you quickly capture tasks, track progress, and stay focused with a lightweight interface.
+
+## Project overview
+
+This project is a mobile-first todo list application with local persistence. Todos are saved on-device using AsyncStorage, so your data remains available after app restarts.
+
+## Features
+
+- Add new tasks
+- Mark tasks as done or active
+- Delete tasks
+- Filter tasks by status: All, Active, Done
+- View quick stats: Total, Left, Done
+- Persist todos locally with AsyncStorage
+- Modern, high-contrast UI for readability
+
+## Tech stack
+
+- Expo
+- React Native
+- TypeScript
+- Expo Router
+- AsyncStorage
+- Expo Vector Icons
 
 ## Demo images
 
 Store README screenshots in `docs/screenshots/` so they stay separate from runtime app assets.
 
-Add your screenshots to:
-
-- `docs/screenshots/home.png`
-- `docs/screenshots/create-task.png`
-- `docs/screenshots/task-list.png`
-
-Then render them in this README:
-
 <img src="./docs/screenshots/Screenshot_20260328_012847.png" alt="Home screen" width="220" />
 <p><em>Version 1</em></p>
 
-## Get started
+## Getting started
 
 1. Install dependencies
 
@@ -25,41 +42,33 @@ Then render them in this README:
    npm install
    ```
 
-2. Start the app
+2. Start the Expo development server
 
    ```bash
-   npx expo start
+   npm run start
    ```
 
-In the output, you'll find options to open the app in a
+3. Run on your preferred platform
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+   ```bash
+   npm run android
+   npm run ios
+   npm run web
+   ```
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## Project structure
 
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```text
+app/
+  _layout.tsx
+  index.tsx
+assets/
+  images/
+docs/
+  screenshots/
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## Notes
 
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- Todo data is stored locally under the AsyncStorage key `@expo-todo/todos`.
+- Screenshots used in this README live in `docs/screenshots/` to avoid mixing docs assets with runtime app assets.
