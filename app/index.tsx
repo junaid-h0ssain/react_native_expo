@@ -262,6 +262,7 @@ export default function Index() {
               <Pressable
                 key={option.key}
                 accessibilityRole="button"
+                accessibilityState={{ selected: isSelected }}
                 onPress={() => setFilter(option.key)}
                 style={({ pressed }) => [
                   styles.filterChip,
@@ -473,22 +474,32 @@ const styles = StyleSheet.create({
   filterChip: {
     paddingVertical: 10,
     paddingHorizontal: 14,
+    minWidth: 88,
     borderRadius: 999,
-    backgroundColor: palette.surface,
+    alignItems: "center",
+    backgroundColor: palette.surfaceAlt,
     borderWidth: 1,
-    borderColor: palette.border,
+    borderColor: palette.borderSoft,
   },
   filterChipSelected: {
-    backgroundColor: palette.surfaceAlt,
+    backgroundColor: palette.accent,
     borderColor: palette.border,
+    shadowColor: palette.accent,
+    shadowOpacity: 0.35,
+    shadowRadius: 10,
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    elevation: 3,
   },
   filterText: {
     fontSize: 14,
     fontWeight: "700",
-    color: palette.textPrimary,
+    color: palette.textSecondary,
   },
   filterTextSelected: {
-    color: palette.textPrimary,
+    color: palette.accentText,
   },
   pressedChip: {
     opacity: 0.85,
