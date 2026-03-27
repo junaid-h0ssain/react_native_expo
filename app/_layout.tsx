@@ -10,7 +10,7 @@ export default function RootLayout() {
         headerShadowVisible: false,
         headerTintColor: "#8deff0",
         contentStyle: {
-          backgroundColor: "#000000",
+          backgroundColor: "#6980ab",
         },
       }}
     >
