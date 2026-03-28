@@ -1,38 +1,28 @@
-import useTheme, { ColorScheme } from "@/hooks/useTheme";
+import { createHomeStyles } from "@/assets/styles/home";
+import useTheme from "@/hooks/useTheme";
 import React from "react";
-import { Text, TouchableOpacity, View, StyleSheet } from "react-native";
+import { StatusBar, Text, TouchableOpacity } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { LinearGradient } from "expo-linear-gradient";
+import Header from "@/components/Header";
 // import { useQuery } from "convex/react";
 // import { api } from "@/convex/_generated/api";
 
 const Index = () => {
     const { toggleTheme, colors } = useTheme();
-    const styles = createStyles(colors);
+    const styles = createHomeStyles(colors);
 
     return (
-        <View
-            style={styles.container}
-        >
-            <Text style={styles.text}>Index</Text>
-            <TouchableOpacity onPress={toggleTheme}>
-                <Text style={styles.text}>Toggle Theme</Text>
-            </TouchableOpacity>
-        </View>
+        <LinearGradient colors={colors.gradients.background} style={styles.container}>
+          <StatusBar barStyle={colors.statusBarStyle} />
+            <SafeAreaView style={styles.container}>
+                <Header />
+                <TouchableOpacity onPress={toggleTheme}>
+                    <Text style={styles.loadingText}>Toggle Theme</Text>
+                </TouchableOpacity>
+            </SafeAreaView>
+        </LinearGradient>
     );
-};
-
-const createStyles = (colors: ColorScheme) => {
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      justifyContent: "center",
-      alignItems: "center",
-      backgroundColor: colors.bg,
-    },
-    text: {
-      color: colors.text,
-    },
-  });
-  return styles;
 };
 
 export default Index;
