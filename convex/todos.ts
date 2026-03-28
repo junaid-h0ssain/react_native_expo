@@ -61,4 +61,13 @@ export const deleteTodo = mutation({
     },
 });
 
-export default { getTodos, addTodo, toggleTodo, updateTodo, deleteTodo };
+export const clearAllTodos = mutation({
+    handler: async (ctx) => {
+        const todos = await ctx.db.query("todos").collect();
+        const deletePromises = todos.map((todo) => ctx.db.delete(todo._id));
+        await Promise.all(deletePromises);
+        return { deletedCount: todos.length };
+    },
+});
+
+export default { getTodos, addTodo, toggleTodo, updateTodo, deleteTodo, clearAllTodos };

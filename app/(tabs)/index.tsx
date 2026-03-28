@@ -239,9 +239,6 @@ const Index = () => {
             <SafeAreaView style={styles.container}>
                 <Header />
                 <TodoInput />
-                <TouchableOpacity onPress={toggleTheme}>
-                    <Text style={styles.loadingText}>Toggle Theme</Text>
-                </TouchableOpacity>
                 <FlatList
                     data={todos}
                     renderItem={renderTodoItem}
