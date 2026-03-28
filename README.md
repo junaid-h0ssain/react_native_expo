@@ -1,22 +1,42 @@
-# Expo Todo App
+# Expo Todo App - Version 1 and Version 2
 
-A simple and polished todo app built with Expo and React Native.
+This project documents the evolution of the same todo app across two versions:
 
-The app helps you quickly capture tasks, track progress, and stay focused with a lightweight interface.
+- Version 1: single-page app with local AsyncStorage persistence
+- Version 2: online Convex database, tabbed navigation, and dark mode support
 
-## Project overview
+## Product evolution
 
-This project is a mobile-first todo list application with local persistence. Todos are saved on-device using AsyncStorage, so your data remains available after app restarts.
+Version 1 was focused on simplicity: one screen, fast task capture, and local device storage.
 
-## Features
+Version 2 keeps the same core todo workflow but introduces a more scalable architecture and richer UX with cloud-backed data, dedicated tabs, a settings page, and theming.
 
-- Add new tasks
-- Mark tasks as done or active
-- Delete tasks
-- Filter tasks by status: All, Active, Done
-- View quick stats: Total, Left, Done
-- Persist todos locally with AsyncStorage
-- Modern, high-contrast UI for readability
+## Version comparison
+
+| Area            | Version 1             | Version 2                                     |
+| --------------- | --------------------- | --------------------------------------------- |
+| Data storage    | Local `AsyncStorage`  | Online `Convex` database                      |
+| App structure   | Single page           | Tabbed pages (Home + Settings)                |
+| Theme support   | Default single theme  | Light/Dark mode toggle                        |
+| Todo operations | Add, complete, delete | Add, complete, edit, delete                   |
+| Extra tools     | Basic todo list       | Progress stats, preferences, reset-all action |
+
+## Version 1 features
+
+- Single-page todo experience
+- Add, complete, and delete tasks
+- Local persistence with AsyncStorage
+- Lightweight and offline-friendly flow
+
+## Version 2 features
+
+- Convex-powered online data layer
+- Tab-based navigation with Home and Settings screens
+- Inline todo editing with save/cancel controls
+- Dark mode and theme toggle support
+- Progress dashboard (Total, Completed, Active)
+- Preferences panel and danger zone reset action
+- Updated visual style with gradient surfaces and polished cards
 
 ## Tech stack
 
@@ -24,51 +44,64 @@ This project is a mobile-first todo list application with local persistence. Tod
 - React Native
 - TypeScript
 - Expo Router
-- AsyncStorage
+- AsyncStorage (Version 1)
+- Convex
+- Convex React
 - Expo Vector Icons
+- Expo Linear Gradient
 
 ## Demo images
 
-Store README screenshots in `docs/screenshots/` so they stay separate from runtime app assets.
-
-<img src="./docs/screenshots/Screenshot_20260328_012847.png" alt="Home screen" width="220" />
+<img src="./docs/screenshots/Screenshot_20260328_012847.png" alt="Version 1 home screen" width="200" />
 <p><em>Version 1</em></p>
+
+<img src="./docs/screenshots/Screenshot_20260329_034303.png" alt="Version 2 home screen" width="200" />
+<img src="./docs/screenshots/Screenshot_20260329_034332.png" alt="Version 2 settings screen" width="200" />
+<p><em>Version 2</em></p>
 
 ## Getting started
 
 1. Install dependencies
 
-   ```bash
-   npm install
-   ```
+    ```bash
+    npm install
+    ```
 
-2. Start the Expo development server
+2. Start Convex in development mode (Version 2 backend)
 
-   ```bash
-   npm run start
-   ```
+```bash
+npx convex dev
+```
 
-3. Run on your preferred platform
+3. Start the Expo development server (new terminal)
 
-   ```bash
-   npm run android
-   npm run ios
-   npm run web
-   ```
+    ```bash
+    npm run start
+    ```
+
+4. Run on your preferred platform
+
+    ```bash
+    npm run android
+    npm run ios
+    npm run web
+    ```
 
 ## Project structure
 
 ```text
 app/
   _layout.tsx
-  index.tsx
+  (tabs)/
+    _layout.tsx
+    index.tsx
+    settings.tsx
 assets/
   images/
+components/
+convex/
 docs/
   screenshots/
 ```
 
-## Notes
 
-- Todo data is stored locally under the AsyncStorage key `@expo-todo/todos`.
-- Screenshots used in this README live in `docs/screenshots/` to avoid mixing docs assets with runtime app assets.
