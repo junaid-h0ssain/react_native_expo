@@ -52,16 +52,24 @@ This project documents the evolution of the same todo app across two versions:
       <img src="./docs/screenshots/Screenshot_20260328_012847.png" alt="Version 1 home screen" width="190" />
     </td>
     <td align="center">
-      <img src="./docs/screenshots/Screenshot_20260329_034303.png" alt="Version 2 home screen" width="190" />
+      <img src="./docs/screenshots/Screenshot_20260329_041835.png" alt="Version 2 home screen" width="190" />
     </td>
     <td align="center">
-      <img src="./docs/screenshots/Screenshot_20260329_034332.png" alt="Version 2 settings screen" width="190" />
+      <img src="./docs/screenshots/Screenshot_20260329_041850.png" alt="Version 2 settings screen" width="190" />
+    </td>
+    <td align="center">
+      <img src="./docs/screenshots/Screenshot_20260329_042145.png" alt="Version 2 settings screen" width="190" />
+    </td>
+    <td align="center">
+      <img src="./docs/screenshots/Screenshot_20260329_042157.png" alt="Version 2 settings screen" width="190" />
     </td>
   </tr>
   <tr>
     <td align="center"><em>Version 1</em></td>
-    <td align="center"><em>Version 2 - Home</em></td>
-    <td align="center"><em>Version 2 - Settings</em></td>
+    <td align="center"><em>Version 2 - Home (Light)</em></td>
+    <td align="center"><em>Version 2 - Settings (Light)</em></td>
+    <td align="center"><em>Version 2 - Home (Dark)</em></td>
+    <td align="center"><em>Version 2 - Settings (Dark)</em></td>
   </tr>
 </table>
 
