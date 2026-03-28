@@ -39,7 +39,7 @@ const lightColors: ColorScheme = {
     bg: "#6598ca",
     surface: "#40658a",
     text: "#000000",
-    textMuted: "#ffffff",
+    textMuted: "#524f4f",
     border: "#e2e8f0",
     primary: "#000000",
     success: "#10b981",
