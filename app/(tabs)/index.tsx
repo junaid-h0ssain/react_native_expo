@@ -1,7 +1,9 @@
+import useTheme from "@/hooks/useTheme";
 import React from "react";
-import { Text, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 
 const Index = () => {
+  const { toggleTheme } = useTheme();
     return (
         <View
             style={{
@@ -11,6 +13,9 @@ const Index = () => {
             }}
         >
             <Text>Index</Text>
+            <TouchableOpacity onPress={toggleTheme}>
+                <Text>Toggle Theme</Text>
+            </TouchableOpacity>
         </View>
     );
 };
