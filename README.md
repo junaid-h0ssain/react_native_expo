@@ -52,12 +52,24 @@ Version 2 keeps the same core todo workflow but introduces a more scalable archi
 
 ## Demo images
 
-<img src="./docs/screenshots/Screenshot_20260328_012847.png" alt="Version 1 home screen" width="200" />
-<p><em>Version 1</em></p>
-
-<img src="./docs/screenshots/Screenshot_20260329_034303.png" alt="Version 2 home screen" width="200" />
-<img src="./docs/screenshots/Screenshot_20260329_034332.png" alt="Version 2 settings screen" width="200" />
-<p><em>Version 2</em></p>
+<table>
+  <tr>
+    <td align="center">
+      <img src="./docs/screenshots/Screenshot_20260328_012847.png" alt="Version 1 home screen" width="190" />
+    </td>
+    <td align="center">
+      <img src="./docs/screenshots/Screenshot_20260329_034303.png" alt="Version 2 home screen" width="190" />
+    </td>
+    <td align="center">
+      <img src="./docs/screenshots/Screenshot_20260329_034332.png" alt="Version 2 settings screen" width="190" />
+    </td>
+  </tr>
+  <tr>
+    <td align="center"><em>Version 1</em></td>
+    <td align="center"><em>Version 2 - Home</em></td>
+    <td align="center"><em>Version 2 - Settings</em></td>
+  </tr>
+</table>
 
 ## Getting started
 
@@ -103,5 +115,3 @@ convex/
 docs/
   screenshots/
 ```
-
-
