@@ -13,9 +13,14 @@ const TabsLayout = () => {
                 tabBarStyle: {
                     backgroundColor: colors.surface,
                     borderTopWidth: 0,
-                    height: 80,
-                    paddingBottom: 24,
-                    paddingTop: 12,
+                    position: "absolute",
+                    left: 16,
+                    right: 16,
+                    bottom: 16,
+                    borderRadius: 18,
+                    height: 74,
+                    paddingBottom: 10,
+                    paddingTop: 10,
                     shadowColor: colors.shadow,
                     shadowOffset: {
                         width: 0,
@@ -23,7 +28,7 @@ const TabsLayout = () => {
                     },
                     shadowOpacity: 0.1,
                     shadowRadius: 8,
-                    elevation: 12,
+                    elevation: 10,
                 },
                 tabBarLabelStyle: {
                     fontSize: 12,
@@ -41,7 +46,11 @@ const TabsLayout = () => {
                     headerShown: false,
                     title: "Todos",
                     tabBarIcon: ({ color, size }) => (
-                        <Ionicons name="list-sharp" size={size + 2} color={color} />
+                        <Ionicons
+                            name="list-sharp"
+                            size={size + 2}
+                            color={color}
+                        />
                     ),
                 }}
             />
@@ -51,7 +60,11 @@ const TabsLayout = () => {
                     headerShown: false,
                     title: "Settings",
                     tabBarIcon: ({ color, size }) => (
-                        <Ionicons name="settings-sharp" size={size + 2} color={color} />
+                        <Ionicons
+                            name="settings-sharp"
+                            size={size + 2}
+                            color={color}
+                        />
                     ),
                 }}
             />

@@ -26,7 +26,7 @@ const Index = () => {
     const [editingId, setEditingId] = useState<Id<"todos"> | null>(null);
     const [editText, setEditText] = useState("");
 
-    const { toggleTheme, colors } = useTheme();
+    const { colors } = useTheme();
     const styles = createHomeStyles(colors);
 
     const todos = useQuery(api.todos.getTodos);
@@ -236,18 +236,20 @@ const Index = () => {
             style={styles.container}
         >
             <StatusBar barStyle={colors.statusBarStyle} />
-            <SafeAreaView style={styles.container}>
+            <SafeAreaView style={styles.safeArea}>
                 <Header />
-                <TodoInput />
-                <FlatList
-                    data={todos}
-                    renderItem={renderTodoItem}
-                    keyExtractor={(item) => item._id}
-                    style={styles.todoList}
-                    contentContainerStyle={styles.todoListContent}
-                    ListEmptyComponent={<EmptyState />}
-                    showsVerticalScrollIndicator={false}
-                />
+                <View style={styles.mainPanel}>
+                    <TodoInput />
+                    <FlatList
+                        data={todos}
+                        renderItem={renderTodoItem}
+                        keyExtractor={(item) => item._id}
+                        style={styles.todoList}
+                        contentContainerStyle={styles.todoListContent}
+                        ListEmptyComponent={<EmptyState />}
+                        showsVerticalScrollIndicator={false}
+                    />
+                </View>
             </SafeAreaView>
         </LinearGradient>
     );
