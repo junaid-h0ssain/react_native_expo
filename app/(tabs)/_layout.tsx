@@ -14,13 +14,30 @@ const TabsLayout = () => {
                     backgroundColor: colors.surface,
                     borderTopWidth: 1,
                     borderTopColor: colors.border,
-                    height: 90,
-                    paddingBottom: 30,
-                    paddingTop: 10,
+                    position: "absolute",
+                    left: 14,
+                    right: 14,
+                    bottom: 18,
+                    borderRadius: 20,
+                    height: 80,
+                    paddingBottom: 12,
+                    paddingTop: 12,
+                    shadowColor: colors.shadow,
+                    shadowOffset: {
+                        width: 0,
+                        height: -4,
+                    },
+                    shadowOpacity: 0.18,
+                    shadowRadius: 10,
+                    elevation: 12,
                 },
                 tabBarLabelStyle: {
-                    fontSize: 14,
-                    fontWeight: "bold",
+                    fontSize: 12,
+                    fontWeight: "700",
+                    letterSpacing: 0.3,
+                },
+                tabBarIconStyle: {
+                    marginBottom: 4,
                 },
             }}
         >
@@ -30,7 +47,11 @@ const TabsLayout = () => {
                     headerShown: false,
                     title: "Todos",
                     tabBarIcon: ({ color, size }) => (
-                        <Ionicons name="list" size={size} color={color} />
+                        <Ionicons
+                            name="list-sharp"
+                            size={size + 2}
+                            color={color}
+                        />
                     ),
                 }}
             />
@@ -40,7 +61,11 @@ const TabsLayout = () => {
                     headerShown: false,
                     title: "Settings",
                     tabBarIcon: ({ color, size }) => (
-                        <Ionicons name="settings" size={size} color={color} />
+                        <Ionicons
+                            name="settings-sharp"
+                            size={size + 2}
+                            color={color}
+                        />
                     ),
                 }}
             />

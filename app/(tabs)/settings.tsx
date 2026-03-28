@@ -33,19 +33,26 @@ const SettingsScreen = () => {
                                 color="#ffffff"
                             />
                         </LinearGradient>
-                        <Text style={settingsStyles.title}>Settings</Text>
+                        <View style={settingsStyles.titleTextContainer}>
+                            <Text style={settingsStyles.title}>Settings</Text>
+                            <Text style={settingsStyles.subtitle}>
+                                Manage preferences and app controls
+                            </Text>
+                        </View>
                     </View>
                 </View>
 
-                <ScrollView
-                    style={settingsStyles.scrollView}
-                    contentContainerStyle={settingsStyles.content}
-                    showsVerticalScrollIndicator={false}
-                >
-                    <ProgressStats />
-                    <Preferences />
-                    <DangerZone />
-                </ScrollView>
+                <View style={settingsStyles.mainPanel}>
+                    <ScrollView
+                        style={settingsStyles.scrollView}
+                        contentContainerStyle={settingsStyles.content}
+                        showsVerticalScrollIndicator={false}
+                    >
+                        <ProgressStats />
+                        <Preferences />
+                        <DangerZone />
+                    </ScrollView>
+                </View>
             </SafeAreaView>
         </LinearGradient>
     );
