@@ -5,12 +5,6 @@ This project documents the evolution of the same todo app across two versions:
 - Version 1: single-page app with local AsyncStorage persistence
 - Version 2: online Convex database, tabbed navigation, and dark mode support
 
-## Product evolution
-
-Version 1 was focused on simplicity: one screen, fast task capture, and local device storage.
-
-Version 2 keeps the same core todo workflow but introduces a more scalable architecture and richer UX with cloud-backed data, dedicated tabs, a settings page, and theming.
-
 ## Version comparison
 
 | Area            | Version 1             | Version 2                                     |
@@ -98,20 +92,3 @@ npx convex dev
     npm run ios
     npm run web
     ```
-
-## Project structure
-
-```text
-app/
-  _layout.tsx
-  (tabs)/
-    _layout.tsx
-    index.tsx
-    settings.tsx
-assets/
-  images/
-components/
-convex/
-docs/
-  screenshots/
-```

@@ -12,15 +12,26 @@ const TabsLayout = () => {
                 tabBarInactiveTintColor: colors.textMuted,
                 tabBarStyle: {
                     backgroundColor: colors.surface,
-                    borderTopWidth: 1,
-                    borderTopColor: colors.border,
-                    height: 90,
-                    paddingBottom: 30,
-                    paddingTop: 10,
+                    borderTopWidth: 0,
+                    height: 80,
+                    paddingBottom: 24,
+                    paddingTop: 12,
+                    shadowColor: colors.shadow,
+                    shadowOffset: {
+                        width: 0,
+                        height: -4,
+                    },
+                    shadowOpacity: 0.1,
+                    shadowRadius: 8,
+                    elevation: 12,
                 },
                 tabBarLabelStyle: {
-                    fontSize: 14,
-                    fontWeight: "bold",
+                    fontSize: 12,
+                    fontWeight: "700",
+                    letterSpacing: 0.3,
+                },
+                tabBarIconStyle: {
+                    marginBottom: 6,
                 },
             }}
         >
@@ -30,7 +41,7 @@ const TabsLayout = () => {
                     headerShown: false,
                     title: "Todos",
                     tabBarIcon: ({ color, size }) => (
-                        <Ionicons name="list" size={size} color={color} />
+                        <Ionicons name="list-sharp" size={size + 2} color={color} />
                     ),
                 }}
             />
@@ -40,7 +51,7 @@ const TabsLayout = () => {
                     headerShown: false,
                     title: "Settings",
                     tabBarIcon: ({ color, size }) => (
-                        <Ionicons name="settings" size={size} color={color} />
+                        <Ionicons name="settings-sharp" size={size + 2} color={color} />
                     ),
                 }}
             />
