@@ -9,11 +9,13 @@ import {
   getSummaryByUserId,
   getTransactionsByUserId,
 } from "./controllers"
+import rateLimiter from "./rateLimiter";
 
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT;
 
+app.use(rateLimiter)
 app.use(express.json());
 
 app.get("/api/health", (req, res) => {
