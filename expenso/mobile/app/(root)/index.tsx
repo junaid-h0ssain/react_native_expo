@@ -2,7 +2,7 @@ import { useUser } from "@clerk/expo";
 import { useRouter } from "expo-router";
 import { Alert, FlatList, Image, RefreshControl, Text, TouchableOpacity, View } from "react-native";
 import { SignOutButton } from "@/components/SignOutButton";
-import { useTransactions } from "../useTransactions";
+import { useTransactions } from "@/hooks/useTransactions";
 import { useEffect, useState } from "react";
 import PageLoader from "../../components/PageLoader";
 import { styles } from "../../assets/styles/home.styles";

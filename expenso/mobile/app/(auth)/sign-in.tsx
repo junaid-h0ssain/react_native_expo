@@ -41,7 +41,7 @@ export default function Page() {
         console.log("Additional authentication required:", signIn.status);
       }
     } catch (err: any) {
-      console.error(err);
+      console.log(err);
   
       const code = err?.errors?.[0]?.code;
   

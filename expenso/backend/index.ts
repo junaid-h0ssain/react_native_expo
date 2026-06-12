@@ -1,7 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import { sql } from "./db";
-// import cors from "cors";
+import cors from "cors";
 
 import {
   createTransaction,
@@ -15,6 +15,7 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT;
 
+app.use(cors());
 app.use(rateLimiter)
 app.use(express.json());
 

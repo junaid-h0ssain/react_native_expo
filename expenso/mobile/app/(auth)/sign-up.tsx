@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Text, TextInput, TouchableOpacity, View } from "react-native";
 import { useSignUp } from "@clerk/expo";
 import { useRouter } from "expo-router";
-import { styles } from "@/assets/styles/auth.styles.js";
+import { styles } from "@/assets/styles/auth.styles";
 import { Ionicons } from "@expo/vector-icons";
 import { COLORS } from "../../assets/colors";
 import { Image } from "expo-image";
@@ -30,7 +30,11 @@ export default function SignUpScreen() {
       });
 
       // Send user an email with verification code
-      await signUp.verifications.sendEmailCode();
+      const { error: sendCodeError } = await signUp.verifications.sendEmailCode();
+
+      if (sendCodeError) {
+        throw sendCodeError;
+      }
 
       // Set 'pendingVerification' to true to display second form
       // and capture OTP code
@@ -51,12 +55,12 @@ export default function SignUpScreen() {
 
     try {
       // Use the code the user provided to attempt verification
-      const { error } = await signUp.verifications.verifyEmailCode({
+      const { error: verifyError } = await signUp.verifications.verifyEmailCode({
         code,
       });
 
-      if (error) {
-        throw error;
+      if (verifyError) {
+        throw verifyError;
       }
 
       // If verification was completed, set the session to active
@@ -70,9 +74,8 @@ export default function SignUpScreen() {
         console.error(JSON.stringify(signUp.status, null, 2));
       }
     } catch (err) {
-      // See https://clerk.com/docs/custom-flows/error-handling
-      // for more info on error handling
-      console.error(JSON.stringify(err, null, 2));
+      console.error(err);
+      setError("Invalid verification code. Please try again.");
     }
   };
 

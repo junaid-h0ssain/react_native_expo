@@ -10,7 +10,7 @@ import {
 import { useRouter } from "expo-router";
 import { useUser } from "@clerk/expo";
 import { useState } from "react";
-import { API_URL } from "../utils";
+import { API_URL } from "@/utils/utils";
 import { styles } from "../../assets/styles/create.styles";
 import { COLORS } from "../../assets/colors";
 import { Ionicons } from "@expo/vector-icons";
@@ -75,7 +75,7 @@ const CreateScreen = () => {
       router.back();
     } catch (error) {
       Alert.alert("Error", error.message || "Failed to create transaction");
-      console.error("Error creating transaction:", error);
+      // console.error(error);
     } finally {
       setIsLoading(false);
     }
