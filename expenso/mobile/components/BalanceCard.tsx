@@ -2,7 +2,13 @@ import { View, Text } from "react-native";
 import { styles } from "../assets/styles/home.styles";
 import { COLORS } from "../assets/colors";
 
-export const BalanceCard = ({ summary }) => {
+interface summary {
+    balance: string;
+    income: string;
+    expenses: string;
+}
+
+export const BalanceCard = ({ summary } : {summary:summary}) => {
   return (
     <View style={styles.balanceCard}>
       <Text style={styles.balanceTitle}>Total Balance</Text>
