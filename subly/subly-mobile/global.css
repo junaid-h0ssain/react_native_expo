@@ -4,6 +4,11 @@
 
 @import "nativewind/theme";
 
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities; */
+
+
 @theme {
     --color-background: #fff9e3;
     --color-foreground: #081126;
