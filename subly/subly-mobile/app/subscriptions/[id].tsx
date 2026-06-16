@@ -6,7 +6,7 @@ const SubDetails = () => {
   const {id} =  useLocalSearchParams<{ id: string }>();
   return (
     <View>
-      <Text>Sub Details</Text>
+      <Text>Sub Details {id}</Text>
       <Link href="/">Go Back</Link>
     </View>
   )
